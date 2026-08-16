@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderFlow — Автоматический мониторинг фриланс-бирж</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header */
+        header {
+            background: #000;
+            padding: 20px 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .logo span {
+            color: #C6FF00;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #C6FF00;
+        }
+
+        .btn-cta {
+            background: #C6FF00;
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-cta:hover {
+            background: #d4ff33;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #000;
+            color: #fff;
+            padding: 80px 40px 120px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+            max-width: 650px;
+        }
+
+        .hero-content h1 span {
+            display: block;
+            white-space: nowrap;
+        }
+
+        .hero-content h1 em {
+            color: #C6FF00;
+            font-style: normal;
+        }
+
+        .hero-content .highlight {
+            color: #C6FF00;
+        }
+
+        .hero-content .subtitle {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #999;
+            margin-bottom: 48px;
+            max-width: 480px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .hero-cta .btn-cta {
+            padding: 16px 32px;
+            font-size: 12px;
+        }
+
+        .hero-cta .secondary {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .platforms {
+            margin-top: 40px;
+        }
+
+        .platforms-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .platforms-logos {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .platforms-logos span {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4ade80;
+            opacity: 0.7;
+        }
+
+        /* Dashboard Mockup */
+        .dashboard-mockup {
+            background: rgba(18, 18, 18, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 0;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            overflow: visible;
+            display: flex;
+            min-height: 580px;
+            max-height: 620px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 28px 0 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            margin-bottom: 24px;
+        }
+
+        .dashboard-logo {
+            font-size: 15px;
+            font-weight: 600;
+            padding: 24px 24px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 20px;
+        }
+
+        .dashboard-logo span {
+            color: #C6FF00;
+        }
+
+        .dashboard-tab {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .dashboard-body {
+            display: flex;
+            gap: 0;
+        }
+
+        .dashboard-sidebar {
+            width: 140px;
+            background: rgba(12, 12, 12, 0.6);
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 12px 24px;
+            position: relative;
+        }
+
+        .sidebar-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .sidebar-item.active {
+            color: #C6FF00;
+        }
+
+        .sidebar-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #C6FF00;
+        }
+
+        .sidebar-item svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        .dashboard-main {
+            flex: 1;
+            padding: 32px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            overflow: hidden;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 18px 16px;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #fff;
+        }
+
+        .stat-change {
+            font-size: 11px;
+            color: #4ade80;
+        }
+
+        .orders-section {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .orders-section h3 {
+            font-size: 13px;
+            font-weight: 500;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+        .order-item {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 8px;
+            display: grid;
+            grid-template-columns: 90px 1fr 110px 90px 110px;
+            gap: 16px;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .order-item:hover {
+            background: rgba(196, 255, 0, 0.02);
+            border-color: rgba(196, 255, 0, 0.1);
+        }
+
+        .order-platform {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+
+        .order-title {
+            font-size: 13px;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .order-price {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .order-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .order-meta {
+            display: contents;
+        }
+
+        .order-relevance {
+            font-size: 11px;
+            color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.12);
+            padding: 5px 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .view-all {
+            color: #3b82f6;
+            font-size: 12px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            transition: gap 0.3s;
+        }
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: #fafafa;
+            padding: 120px 40px;
+        }
+
+        .benefits-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            max-width: 500px;
+            margin-bottom: 80px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.5px;
+        }
+
+        .section-title .highlight {
+            color: #C6FF00;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .benefit-card {
+            position: relative;
+        }
+
+        .benefit-number {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 24px;
+        }
+
+        .benefit-icon {
+            width: 68px;
+            height: 68px;
+            background: #C6FF00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .benefit-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #000;
+            fill: none;
+            stroke-width: 2.5;
+        }
+
+        .benefit-title {
+            font-size: 22px;
+            line-height: 1.3;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .benefit-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* Audience Section */
+        .audience {
+            background: #fafafa;
+            padding: 100px 40px;
+        }
+
+        .audience-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.9fr 1fr 1.1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .audience-content {
+            padding-right: 40px;
+        }
+
+        .audience-content .section-title {
+            margin-bottom: 32px;
+        }
+
+        .audience-description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 0;
+            border-top: 2px solid #000;
+            padding-top: 24px;
+        }
+
+        .audience-types {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-top: 20px;
+        }
+
+        .audience-type {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .audience-icon {
+            width: 56px;
+            height: 56px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .audience-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .audience-type-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #000;
+        }
+
+        .audience-type-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .laptop-mockup {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .laptop-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: #f0f0f0;
+            padding: 120px 40px;
+        }
+
+        .cta-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .cta-content .section-title {
+            margin-bottom: 60px;
+        }
+
+        .cta-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .cta-feature {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .cta-feature-icon {
+            width: 60px;
+            height: 60px;
+            background: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: #fff;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .cta-feature-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .cta-feature-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .cta-card {
+            background: #fff;
+            border: 2px solid #C6FF00;
+            border-radius: 16px;
+            padding: 48px 40px;
+        }
+
+        .cta-card-title {
+            font-size: 32px;
+            line-height: 1.3;
+            font-weight: 700;
+            margin-bottom: 32px;
+            color: #000;
+        }
+
+        .cta-list {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .cta-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 16px;
+            color: #000;
+        }
+
+        .cta-list li::before {
+            content: '✓';
+            color: #C6FF00;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .cta-card .btn-cta {
+            width: 100%;
+            padding: 18px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-container,
+            .audience-container,
+            .cta-container {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .cta-features {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-mockup {
+                transform: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Order<span>Flow</span></div>
+            <ul class="nav-menu">
+                <li><a href="#benefits">Преимущества</a></li>
+                <li><a href="#how">Как это работает</a></li>
+                <li><a href="#audience">Подходит для</a></li>
+                <li><a href="#pricing">Тарифы</a></li>
+                <li><button class="btn-cta">попробовать бесплатно</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>
+                    <span>Больше клиентов.</span>
+                    <span>Меньше поиска.</span>
+                    <span>Больше работы,</span>
+                    <span>которая <em>приносит доход.</em></span>
+                </h1>
+                <p class="subtitle">
+                    OrderFlow автоматически мониторит фриланс-биржи и находит подходящие заказы, чтобы вы быстрее получали новых клиентов.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-cta">попробовать бесплатно</button>
+                    <div class="secondary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                        </svg>
+                        без карты • 7 дней бесплатно
+                    </div>
+                </div>
+                <div class="platforms">
+                    <div class="platforms-label">мы поддерживаем:</div>
+                    <div class="platforms-logos">
+                        <span>upwork</span>
+                        <span>freelancer</span>
+                        <span>fiverr</span>
+                        <span>peopleperhour</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-mockup">
+                <div class="dashboard-sidebar">
+                    <div class="dashboard-logo">Order<span>Flow</span></div>
+                    <div class="sidebar-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                        </svg>
+                        Дашборд
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        </svg>
+                        Проекты
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                        </svg>
+                        Фильтры
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                        Отклики
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87"/>
+                        </svg>
+                        Статистика
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                        Настройки
+                    </div>
+                    <div class="sidebar-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        </svg>
+                        Подписка
+                    </div>
+                </div>
+                <div class="dashboard-main">
+                    <div class="dashboard-header">
+                        <div class="dashboard-tab">Дашборд</div>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-label">Новые заказы</div>
+                            <div class="stat-value">128</div>
+                            <div class="stat-change">+24 за сегодня</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Подходящие</div>
+                            <div class="stat-value">87</div>
+                            <div class="stat-change">+18 за сегодня</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Отклики</div>
+                            <div class="stat-value">23</div>
+                            <div class="stat-change">+7 за сегодня</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Отклики</div>
+                            <div class="stat-value">5</div>
+                            <div class="stat-change">+2 за сегодня</div>
+                        </div>
+                    </div>
+                    <div class="orders-section">
+                        <h3>Последние подходящие заказы</h3>
+                        <div class="order-item">
+                            <div class="order-platform" style="color: #4ade80;">upwork</div>
+                            <div class="order-title">Frontend Designer (React)</div>
+                            <div class="order-price">$1500 – $2500</div>
+                            <div class="order-time">2 мин назад</div>
+                            <div class="order-relevance">95% релевантно</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-platform" style="color: #3b82f6;">freelancer</div>
+                            <div class="order-title">WordPress Website Development</div>
+                            <div class="order-price">$800 – $1200</div>
+                            <div class="order-time">4 мин назад</div>
+                            <div class="order-relevance">90% релевантно</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-platform" style="color: #10b981;">fiverr</div>
+                            <div class="order-title">Shopify Store Customization</div>
+                            <div class="order-price">$400 – $800</div>
+                            <div class="order-time">6 мин назад</div>
+                            <div class="order-relevance">85% релевантно</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-platform" style="color: #f97316;">peopleperhour</div>
+                            <div class="order-title">UI/UX Design for Mobile App</div>
+                            <div class="order-price">$1000 – $1800</div>
+                            <div class="order-time">8 мин назад</div>
+                            <div class="order-relevance">95% релевантно</div>
+                        </div>
+                        <div class="order-item">
+                            <div class="order-platform" style="color: #4ade80;">upwork</div>
+                            <div class="order-title">API Integration (Python)</div>
+                            <div class="order-price">$600 – $1100</div>
+                            <div class="order-time">10 мин назад</div>
+                            <div class="order-relevance">98% релевантно</div>
+                        </div>
+                        <a href="#" class="view-all">
+                            Посмотреть все подходящие заказы →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="benefits">
+        <div class="benefits-container">
+            <div class="section-header">
+                <div class="section-label">преимущества</div>
+                <h2 class="section-title">
+                    Три причины,<br>
+                    почему фрилансеры<br>
+                    выбирают <span class="highlight">OrderFlow</span>
+                </h2>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-number">01</div>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Находит релевантные проекты сразу после публикации.</h3>
+                    <p class="benefit-text">Вы получаете подходящие заказы в первые минуты, когда у вас максимальный шанс быть замеченным.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-number">02</div>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Отсекает нерелевантные заказы по вашим услугам, бюджету и ключевым словам.</h3>
+                    <p class="benefit-text">Работает умный фильтр, который показывает только то, что действительно вам подходит.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-number">03</div>
+                    <div class="benefit-icon">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                    </div>
+                    <h3 class="benefit-title">Экономит часы ручного поиска и повышает шанс откликнуться первым.</h3>
+                    <p class="benefit-text">Автоматизация рутины позволяет вам сосредоточиться на работе и росте дохода.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="audience" class="audience">
+        <div class="audience-container">
+            <div class="audience-content">
+                <div class="section-label">подходит для</div>
+                <h2 class="section-title">
+                    Для фрилансеров,<br>
+                    агентств и небольших<br>
+                    команд.
+                </h2>
+                <p class="audience-description">
+                    OrderFlow помогает соло-специалистам, агентствам и командам быстрее находить клиентов и стабильно получать поток качественных лидов.
+                </p>
+            </div>
+            <div class="audience-types">
+                <div class="audience-type">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="audience-type-title">Фрилансерам</h3>
+                        <p class="audience-type-text">Больше заказов и стабильный доход без постоянного поиска.</p>
+                    </div>
+                </div>
+                <div class="audience-type">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                            <rect x="9" y="9" width="6" height="6"/>
+                            <line x1="9" y1="1" x2="9" y2="4"/>
+                            <line x1="15" y1="1" x2="15" y2="4"/>
+                            <line x1="9" y1="20" x2="9" y2="23"/>
+                            <line x1="15" y1="20" x2="15" y2="23"/>
+                            <line x1="20" y1="9" x2="23" y2="9"/>
+                            <line x1="20" y1="14" x2="23" y2="14"/>
+                            <line x1="1" y1="9" x2="4" y2="9"/>
+                            <line x1="1" y1="14" x2="4" y2="14"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="audience-type-title">Агентствам</h3>
+                        <p class="audience-type-text">Быстрый рост клиентской базы и загрузка команды.</p>
+                    </div>
+                </div>
+                <div class="audience-type">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="audience-type-title">Небольшим командам</h3>
+                        <p class="audience-type-text">Стабильная работа и постоянный поток релевантных проектов.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="laptop-mockup">
+                <img src="assets/orderflow-laptop.png" alt="OrderFlow Dashboard на ноутбуке" class="laptop-image">
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section">
+        <div class="cta-container">
+            <div class="cta-content">
+                <div class="section-label">это выгодно</div>
+                <h2 class="section-title">
+                    Меньше времени уходит<br>
+                    на поиск, больше —<br>
+                    на <span class="highlight">оплачиваемую работу</span><br>
+                    и закрытие сделок.
+                </h2>
+                <div class="cta-features">
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">
+                            <svg viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <h4 class="cta-feature-title">Меньше рутины</h4>
+                        <p class="cta-feature-text">Больше времени на то, что приносит деньги.</p>
+                    </div>
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">
+                            <svg viewBox="0 0 24 24">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                            </svg>
+                        </div>
+                        <h4 class="cta-feature-title">Больше откликов</h4>
+                        <p class="cta-feature-text">Вы откликаетесь первым и получаете больший отклик.</p>
+                    </div>
+                    <div class="cta-feature">
+                        <div class="cta-feature-icon">
+                            <svg viewBox="0 0 24 24">
+                                <line x1="12" y1="1" x2="12" y2="23"/>
+                                <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                            </svg>
+                        </div>
+                        <h4 class="cta-feature-title">Больший доход</h4>
+                        <p class="cta-feature-text">Больше закрытых сделок и постоянный рост.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="cta-card">
+                <h3 class="cta-card-title">Начните бесплатно<br>уже сегодня!</h3>
+                <ul class="cta-list">
+                    <li>7 дней бесплатно</li>
+                    <li>Без привязки карты</li>
+                    <li>Отмена в любой момент</li>
+                </ul>
+                <button class="btn-cta">попробовать бесплатно</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
