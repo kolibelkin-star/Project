@@ -261,6 +261,271 @@
             background: #C6FF00;
         }
 
+        /* Tab content animation */
+        .dashboard-main {
+            transition: opacity 0.2s ease;
+        }
+
+        .dashboard-main.fade-out {
+            opacity: 0;
+        }
+
+        /* Projects table */
+        .projects-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .projects-table th {
+            text-align: left;
+            font-size: 10px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .projects-table td {
+            padding: 14px 8px;
+            font-size: 13px;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .project-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+        }
+
+        .status-pending {
+            background: rgba(251, 146, 60, 0.12);
+            color: #fb923c;
+        }
+
+        .status-completed {
+            background: rgba(156, 163, 175, 0.12);
+            color: #9ca3af;
+        }
+
+        /* Filters section */
+        .filter-group {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .filter-group h4 {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-tag {
+            background: rgba(198, 255, 0, 0.1);
+            color: #C6FF00;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+
+        /* Responses section */
+        .response-item {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 1fr 120px 100px;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .response-title {
+            font-size: 13px;
+            color: #fff;
+        }
+
+        .response-platform {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .response-status {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        .status-sent {
+            background: rgba(59, 130, 246, 0.12);
+            color: #3b82f6;
+        }
+
+        .status-viewed {
+            background: rgba(251, 146, 60, 0.12);
+            color: #fb923c;
+        }
+
+        .status-replied {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+        }
+
+        /* Statistics chart */
+        .stats-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 200px;
+            margin-bottom: 24px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: rgba(198, 255, 0, 0.2);
+            border-radius: 4px 4px 0 0;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .chart-bar:hover {
+            background: rgba(198, 255, 0, 0.4);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: #666;
+            white-space: nowrap;
+        }
+
+        /* Settings section */
+        .settings-group {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .settings-group h4 {
+            font-size: 13px;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 13px;
+            color: #999;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-switch.active {
+            background: #C6FF00;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: left 0.2s;
+        }
+
+        .toggle-switch.active::after {
+            left: 22px;
+        }
+
+        /* Subscription section */
+        .subscription-card {
+            background: rgba(198, 255, 0, 0.05);
+            border: 2px solid rgba(198, 255, 0, 0.2);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .subscription-plan {
+            font-size: 18px;
+            font-weight: 600;
+            color: #C6FF00;
+            margin-bottom: 8px;
+        }
+
+        .subscription-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .subscription-period {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .subscription-info {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .manage-btn {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .manage-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         .sidebar-item svg {
             width: 14px;
             height: 14px;
@@ -1264,5 +1529,351 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Dashboard tab switching
+        const tabs = {
+            'Дашборд': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Дашборд</div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Новые заказы</div>
+                        <div class="stat-value">128</div>
+                        <div class="stat-change">+24 за сегодня</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Подходящие</div>
+                        <div class="stat-value">87</div>
+                        <div class="stat-change">+18 за сегодня</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Отклики</div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-change">+7 за сегодня</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Сделки</div>
+                        <div class="stat-value">5</div>
+                        <div class="stat-change">+2 за сегодня</div>
+                    </div>
+                </div>
+                <div class="orders-section">
+                    <h3>Последние подходящие заказы</h3>
+                    <div class="order-item">
+                        <div class="order-platform" style="color: #4ade80;">upwork</div>
+                        <div class="order-title">Frontend Designer (React)</div>
+                        <div class="order-price">$1500 – $2500</div>
+                        <div class="order-time">2 мин назад</div>
+                        <div class="order-relevance">95% релевантно</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-platform" style="color: #3b82f6;">freelancer</div>
+                        <div class="order-title">WordPress Website Development</div>
+                        <div class="order-price">$800 – $1200</div>
+                        <div class="order-time">4 мин назад</div>
+                        <div class="order-relevance">90% релевантно</div>
+                    </div>
+                    <div class="order-item">
+                        <div class="order-platform" style="color: #10b981;">fiverr</div>
+                        <div class="order-title">Shopify Store Customization</div>
+                        <div class="order-price">$400 – $800</div>
+                        <div class="order-time">6 мин назад</div>
+                        <div class="order-relevance">85% релевантно</div>
+                    </div>
+                </div>
+            `,
+            'Проекты': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Проекты</div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="projects-table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Площадка</th>
+                                <th>Бюджет</th>
+                                <th>Дата</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>E-commerce Platform Redesign</td>
+                                <td style="color: #4ade80;">upwork</td>
+                                <td>$2500</td>
+                                <td>12.08.2026</td>
+                                <td><span class="project-status status-active">В работе</span></td>
+                            </tr>
+                            <tr>
+                                <td>Mobile App UI/UX</td>
+                                <td style="color: #3b82f6;">freelancer</td>
+                                <td>$1800</td>
+                                <td>10.08.2026</td>
+                                <td><span class="project-status status-active">В работе</span></td>
+                            </tr>
+                            <tr>
+                                <td>WordPress Blog Setup</td>
+                                <td style="color: #10b981;">fiverr</td>
+                                <td>$600</td>
+                                <td>08.08.2026</td>
+                                <td><span class="project-status status-pending">Ожидание</span></td>
+                            </tr>
+                            <tr>
+                                <td>Logo Design & Branding</td>
+                                <td style="color: #f97316;">peopleperhour</td>
+                                <td>$1200</td>
+                                <td>05.08.2026</td>
+                                <td><span class="project-status status-completed">Завершён</span></td>
+                            </tr>
+                            <tr>
+                                <td>API Integration Project</td>
+                                <td style="color: #4ade80;">upwork</td>
+                                <td>$950</td>
+                                <td>03.08.2026</td>
+                                <td><span class="project-status status-completed">Завершён</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            'Фильтры': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Фильтры</div>
+                </div>
+                <div class="filter-group">
+                    <h4>Услуги</h4>
+                    <div class="filter-tags">
+                        <span class="filter-tag">Web Development</span>
+                        <span class="filter-tag">UI/UX Design</span>
+                        <span class="filter-tag">Frontend</span>
+                        <span class="filter-tag">React</span>
+                        <span class="filter-tag">WordPress</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>Бюджет</h4>
+                    <div class="filter-tags">
+                        <span class="filter-tag">$500 - $1000</span>
+                        <span class="filter-tag">$1000 - $2500</span>
+                        <span class="filter-tag">$2500+</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>Ключевые слова</h4>
+                    <div class="filter-tags">
+                        <span class="filter-tag">react</span>
+                        <span class="filter-tag">design</span>
+                        <span class="filter-tag">responsive</span>
+                        <span class="filter-tag">mobile</span>
+                        <span class="filter-tag">api</span>
+                        <span class="filter-tag">ecommerce</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h4>Площадки</h4>
+                    <div class="filter-tags">
+                        <span class="filter-tag">Upwork</span>
+                        <span class="filter-tag">Freelancer</span>
+                        <span class="filter-tag">Fiverr</span>
+                        <span class="filter-tag">PeoplePerHour</span>
+                    </div>
+                </div>
+            `,
+            'Отклики': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Отклики</div>
+                </div>
+                <div class="response-item">
+                    <div>
+                        <div class="response-title">Frontend Designer (React)</div>
+                        <div class="response-platform">upwork • 15.08.2026</div>
+                    </div>
+                    <div class="response-status status-replied">Ответ получен</div>
+                    <div style="font-size: 12px; color: #4ade80;">Заинтересован</div>
+                </div>
+                <div class="response-item">
+                    <div>
+                        <div class="response-title">WordPress Website Development</div>
+                        <div class="response-platform">freelancer • 14.08.2026</div>
+                    </div>
+                    <div class="response-status status-viewed">Просмотрен</div>
+                    <div style="font-size: 12px; color: #666;">Ожидание</div>
+                </div>
+                <div class="response-item">
+                    <div>
+                        <div class="response-title">Shopify Store Customization</div>
+                        <div class="response-platform">fiverr • 13.08.2026</div>
+                    </div>
+                    <div class="response-status status-sent">Отправлен</div>
+                    <div style="font-size: 12px; color: #666;">Новый</div>
+                </div>
+                <div class="response-item">
+                    <div>
+                        <div class="response-title">UI/UX Design for Mobile App</div>
+                        <div class="response-platform">peopleperhour • 12.08.2026</div>
+                    </div>
+                    <div class="response-status status-replied">Ответ получен</div>
+                    <div style="font-size: 12px; color: #4ade80;">Обсуждение</div>
+                </div>
+                <div class="response-item">
+                    <div>
+                        <div class="response-title">API Integration (Python)</div>
+                        <div class="response-platform">upwork • 11.08.2026</div>
+                    </div>
+                    <div class="response-status status-viewed">Просмотрен</div>
+                    <div style="font-size: 12px; color: #666;">Ожидание</div>
+                </div>
+            `,
+            'Статистика': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Статистика</div>
+                </div>
+                <div style="margin-bottom: 32px;">
+                    <h3 style="font-size: 13px; color: #999; margin-bottom: 20px;">Новые заказы за неделю</h3>
+                    <div class="stats-chart">
+                        <div class="chart-bar" style="height: 60%;">
+                            <span class="chart-label">Пн</span>
+                        </div>
+                        <div class="chart-bar" style="height: 75%;">
+                            <span class="chart-label">Вт</span>
+                        </div>
+                        <div class="chart-bar" style="height: 85%;">
+                            <span class="chart-label">Ср</span>
+                        </div>
+                        <div class="chart-bar" style="height: 70%;">
+                            <span class="chart-label">Чт</span>
+                        </div>
+                        <div class="chart-bar" style="height: 90%;">
+                            <span class="chart-label">Пт</span>
+                        </div>
+                        <div class="chart-bar" style="height: 45%;">
+                            <span class="chart-label">Сб</span>
+                        </div>
+                        <div class="chart-bar" style="height: 40%;">
+                            <span class="chart-label">Вс</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-label">Всего заказов</div>
+                        <div class="stat-value">487</div>
+                        <div class="stat-change">+68 за неделю</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Конверсия</div>
+                        <div class="stat-value">12%</div>
+                        <div class="stat-change">+2% за неделю</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Средний чек</div>
+                        <div class="stat-value">$1250</div>
+                        <div class="stat-change">+$150 за неделю</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Доход</div>
+                        <div class="stat-value">$8750</div>
+                        <div class="stat-change">+$1200 за неделю</div>
+                    </div>
+                </div>
+            `,
+            'Настройки': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Настройки</div>
+                </div>
+                <div class="settings-group">
+                    <h4>Уведомления</h4>
+                    <div class="settings-option">
+                        <span>Email уведомления о новых заказах</span>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                    <div class="settings-option">
+                        <span>Push уведомления в браузере</span>
+                        <div class="toggle-switch active"></div>
+                    </div>
+                    <div class="settings-option">
+                        <span>Telegram уведомления</span>
+                        <div class="toggle-switch"></div>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h4>Мониторинг</h4>
+                    <div class="settings-option">
+                        <span>Частота проверки</span>
+                        <span style="color: #C6FF00;">Каждые 5 минут</span>
+                    </div>
+                    <div class="settings-option">
+                        <span>Автоматические отклики</span>
+                        <div class="toggle-switch"></div>
+                    </div>
+                </div>
+                <div class="settings-group">
+                    <h4>Профиль</h4>
+                    <div class="settings-option">
+                        <span>Язык интерфейса</span>
+                        <span style="color: #C6FF00;">Русский</span>
+                    </div>
+                    <div class="settings-option">
+                        <span>Часовой пояс</span>
+                        <span style="color: #C6FF00;">UTC+3 (Москва)</span>
+                    </div>
+                </div>
+            `,
+            'Подписка': `
+                <div class="dashboard-header">
+                    <div class="dashboard-tab">Подписка</div>
+                </div>
+                <div class="subscription-card">
+                    <div class="subscription-plan">Pro Plan</div>
+                    <div class="subscription-price">$29<span style="font-size: 16px; color: #666;">/месяц</span></div>
+                    <div class="subscription-period">Следующее списание: 24 августа 2026</div>
+                    <div class="subscription-info">Автоматическое продление активно</div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
+                    <div class="stat-card">
+                        <div class="stat-label">Заказов найдено</div>
+                        <div class="stat-value" style="font-size: 24px;">1,247</div>
+                        <div class="stat-change">За этот месяц</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Откликов отправлено</div>
+                        <div class="stat-value" style="font-size: 24px;">156</div>
+                        <div class="stat-change">За этот месяц</div>
+                    </div>
+                </div>
+                <button class="manage-btn">Управление подпиской</button>
+                <button class="manage-btn" style="margin-top: 12px; color: #f87171;">Отменить подписку</button>
+            `
+        };
+
+        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        const dashboardMain = document.querySelector('.dashboard-main');
+
+        sidebarItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const tabName = this.textContent.trim();
+
+                // Remove active class from all items
+                sidebarItems.forEach(i => i.classList.remove('active'));
+
+                // Add active class to clicked item
+                this.classList.add('active');
+
+                // Fade out animation
+                dashboardMain.classList.add('fade-out');
+
+                // Change content after fade out
+                setTimeout(() => {
+                    if (tabs[tabName]) {
+                        dashboardMain.innerHTML = tabs[tabName];
+                    }
+                    dashboardMain.classList.remove('fade-out');
+                }, 200);
+            });
+        });
+    </script>
 </body>
 </html>
